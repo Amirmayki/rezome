@@ -9,6 +9,8 @@ https://docs.djangoproject.com/en/6.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
+ALLOWED_HOSTS = ['Amir1384.pythonanywhere.com']
+CSRF_TRUSTED_ORIGINS = ['https://Amir1384.pythonanywhere.com']
 
 from pathlib import Path
 
