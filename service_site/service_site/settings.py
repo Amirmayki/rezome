@@ -9,8 +9,6 @@ https://docs.djangoproject.com/en/6.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
-ALLOWED_HOSTS = ['Amir1384.pythonanywhere.com']
-CSRF_TRUSTED_ORIGINS = ['https://Amir1384.pythonanywhere.com']
 
 from pathlib import Path
 
@@ -27,7 +25,7 @@ SECRET_KEY = 'django-insecure-vw_1*bg*0lu%mb690(=+n$rv3h^gq@*+3mep87xo$ixrik(y(e
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','localhost']
+ALLOWED_HOSTS = ['127.0.0.1','localhost','Amir1384.pythonanywhere.com']
 
 
 # Application definition
