@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from .models import Service, Portfolio
 from .forms import OrderForm
+from django.contrib import messages
+from .forms import OrderForm, ContactForm
 
 def calculate_price(service, description):
     """هوش مصنوعی قیمت‌گذاری واقعی"""
@@ -30,7 +32,7 @@ def calculate_price(service, description):
 
 def home(request):
     services = Service.objects.all()
-    portfolios = Portfolio.objects.all()[:6]  # فقط ۶ تا نشون بده
+    portfolios = Portfolio.objects.order_by("-created_at")[:6] # فقط ۶ تا نشون بده
     form = OrderForm()
 
     if request.method == 'POST':
@@ -39,6 +41,10 @@ def home(request):
             order = form.save(commit=False)
             order.estimated_price, _ = calculate_price(order.service, order.description)
             order.save()
+            messages.success(
+                request,
+                "✅ سفارش شما با موفقیت ثبت شد. کارشناسان ما به زودی با شما تماس خواهند گرفت."
+            )
             return redirect('success')
 
     context = {
@@ -47,6 +53,45 @@ def home(request):
         'form': form,
     }
     return render(request, 'home.html', context)
+
+def contact(request):
+
+    form = ContactForm()
+
+    if request.method == "POST":
+
+        form = ContactForm(request.POST)
+
+        if form.is_valid():
+
+            form.save()
+
+            messages.success(
+
+                request,
+
+                "پیام شما ثبت شد."
+
+            )
+
+            return redirect("contact")
+
+    return render(
+
+        request,
+
+        "contact.html",
+
+        {
+
+            "form": form
+
+        }
+
+    )
+
+def about(request):
+    return render(request, "about.html")
 
 def success(request):
     return render(request, 'success.html')
