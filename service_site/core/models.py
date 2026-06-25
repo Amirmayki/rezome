@@ -181,19 +181,28 @@ class Testimonial(models.Model):
 
 class Career(models.Model):
 
-    title = models.CharField(max_length=200)
+    title = models.CharField(
+        max_length=200,
+        verbose_name="عنوان شغلی"
+    )
 
-    description = models.TextField()
+    description = models.TextField(
+        verbose_name="توضیحات"
+    )
 
-    requirements = models.TextField()
+    requirements = models.TextField(
+        verbose_name="شرایط"
+    )
 
     salary = models.CharField(
         max_length=100,
-        blank=True
+        blank=True,
+        verbose_name="حقوق"
     )
 
     active = models.BooleanField(
-        default=True
+        default=True,
+        verbose_name="فعال"
     )
 
     created_at = models.DateTimeField(
@@ -202,3 +211,27 @@ class Career(models.Model):
 
     def __str__(self):
         return self.title
+
+class JobApplication(models.Model):
+
+    full_name = models.CharField(max_length=100)
+
+    phone = models.CharField(max_length=20)
+
+    email = models.EmailField()
+
+    position = models.ForeignKey(
+        Career,
+        on_delete=models.CASCADE
+    )
+
+    resume = models.FileField(
+        upload_to="resumes/"
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    def __str__(self):
+        return self.full_name
