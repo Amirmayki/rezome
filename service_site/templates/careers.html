@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <h1 class="mb-5">
+        فرصت‌های شغلی
+    </h1>
+
+    {% for job in jobs %}
+
+    <div class="card p-4 mb-3">
+
+        <h3>{{ job.title }}</h3>
+
+        <p>{{ job.description }}</p>
+
+        <p>{{ job.requirements }}</p>
+
+    </div>
+
+    {% endfor %}
+
+    <hr>
+
+    <h2>ارسال رزومه</h2>
+
+    <form method="post"
+          enctype="multipart/form-data">
+
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button
+            class="btn btn-danger"
+            type="submit">
+
+            ارسال رزومه
+
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

@@ -4,6 +4,7 @@ import re
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from .models import Contact
+from .models import JobApplication
 
 
 class OrderForm(forms.ModelForm):
@@ -151,4 +152,47 @@ class ContactForm(forms.ModelForm):
 
             }),
 
+        }
+
+class JobApplicationForm(forms.ModelForm):
+
+    class Meta:
+        model = JobApplication
+
+        fields = [
+            "full_name",
+            "phone",
+            "email",
+            "position",
+            "resume",
+        ]
+
+        widgets = {
+
+            "full_name": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "نام و نام خانوادگی",
+                }
+            ),
+
+            "phone": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "شماره تماس",
+                }
+            ),
+
+            "email": forms.EmailInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "ایمیل",
+                }
+            ),
+
+            "position": forms.Select(
+                attrs={
+                    "class": "form-select",
+                }
+            ),
         }

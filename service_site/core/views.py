@@ -3,6 +3,8 @@ from .models import Service, Portfolio
 from .forms import OrderForm
 from django.contrib import messages
 from .forms import OrderForm, ContactForm
+from .models import Career
+from .forms import JobApplicationForm
 
 def calculate_price(service, description):
     """هوش مصنوعی قیمت‌گذاری واقعی"""
@@ -95,3 +97,36 @@ def about(request):
 
 def success(request):
     return render(request, 'success.html')
+
+def careers(request):
+
+    jobs = Career.objects.filter(active=True)
+
+    form = JobApplicationForm()
+
+    if request.method == "POST":
+
+        form = JobApplicationForm(
+            request.POST,
+            request.FILES
+        )
+
+        if form.is_valid():
+
+            form.save()
+
+            messages.success(
+                request,
+                "رزومه شما با موفقیت ثبت شد."
+            )
+
+            return redirect("careers")
+
+    return render(
+        request,
+        "careers.html",
+        {
+            "jobs": jobs,
+            "form": form,
+        }
+    )
